@@ -35,6 +35,7 @@
                         <th class="px-4 py-2">Ticker</th>
                         <th class="px-4 py-2">Allocation (%)</th>
                         <th class="px-4 py-2">ESG Score</th>
+                        <th class="px-4 py-2">Risk Score</th>
                         <th class="px-4 py-2">Controversies</th>
                     </tr>
                 </thead>
@@ -59,7 +60,7 @@
         </footer>
     </div>
 
-    <script src="../src/app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
 <script>
@@ -72,9 +73,9 @@
     };
 
     const portfolioData = [
-        { ticker: 'AAPL', allocation: 30, esgScore: 85, environment: 90, social: 80, governance: 85 },
-        { ticker: 'TSLA', allocation: 25, esgScore: 75, environment: 70, social: 90, governance: 60 },
-        { ticker: 'AMZN', allocation: 20, esgScore: 65, environment: 60, social: 70, governance: 75 },
+        { ticker: 'AAPL', allocation: 30, esgScore: 85, riskScore: 20, environment: 90, social: 80, governance: 85 },
+        { ticker: 'TSLA', allocation: 25, esgScore: 75, riskScore: 25, environment: 70, social: 90, governance: 60 },
+        { ticker: 'AMZN', allocation: 20, esgScore: 65, riskScore: 30, environment: 60, social: 70, governance: 75 },
         // Add more portfolio items as needed
     ];
 
@@ -89,6 +90,7 @@
                 <td class="px-4 py-2">${item.ticker}</td>
                 <td class="px-4 py-2">${item.allocation}</td>
                 <td class="px-4 py-2">${item.esgScore}</td>
+                <td class="px-4 py-2">${item.riskScore}</td>
                 <td class="px-4 py-2">E: ${item.environment} S: ${item.social} G: ${item.governance}</td>
                 <td class="px-4 py-2">${alerts[item.ticker] || 'No recent controversies'}</td>
             `;
@@ -106,7 +108,7 @@
         const allocation = parseFloat(document.getElementById('allocation').value);
 
         // Add new item to portfolio data
-        portfolioData.push({ ticker, allocation, esgScore: Math.floor(Math.random() * 101), environment: Math.floor(Math.random() * 101), social: Math.floor(Math.random() * 101), governance: Math.floor(Math.random() * 101) });
+        portfolioData.push({ ticker, allocation, esgScore: Math.floor(Math.random() * 101), riskScore: Math.floor(Math.random() * 101), environment: Math.floor(Math.random() * 101), social: Math.floor(Math.random() * 101), governance: Math.floor(Math.random() * 101) });
         populatePortfolioTable();
 
         // Clear form fields
@@ -127,7 +129,7 @@
                 lines.forEach(line => {
                     const [ticker, allocation] = line.split(',');
                     if (ticker && allocation) {
-                        portfolioData.push({ ticker: ticker.trim().toUpperCase(), allocation: parseFloat(allocation), esgScore: Math.floor(Math.random() * 101), environment: Math.floor(Math.random() * 101), social: Math.floor(Math.random() * 101), governance: Math.floor(Math.random() * 101) });
+                        portfolioData.push({ ticker: ticker.trim().toUpperCase(), allocation: parseFloat(allocation), esgScore: Math.floor(Math.random() * 101), riskScore: Math.floor(Math.random() * 101), environment: Math.floor(Math.random() * 101), social: Math.floor(Math.random() * 101), governance: Math.floor(Math.random() * 101) });
                     }
                 });
 
