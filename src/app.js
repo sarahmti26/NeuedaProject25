@@ -8,15 +8,32 @@ const alerts = {
     // Add more mocked controversies as needed
 };
 
-document.getElementById('stock-form').addEventListener('submit', function(e) {
+async function fetchESGScore(ticker) {
+    try {
+        const response = await fetch(`http://localhost:5001/esg?ticker=${ticker}`);
+        if (!response.ok) throw new Error('No ESG data found');
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        return null;
+    }
+}
+
+document.getElementById('stock-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const ticker = document.getElementById('ticker').value.toUpperCase();
     const allocation = parseFloat(document.getElementById('allocation').value);
 
-    // Mock ESG score generation for demonstration
-    const esgScore = Math.floor(Math.random() * 101);
-
-    portfolio.push({ ticker, allocation, esgScore });
+    // Fetch ESG score from Python API
+    const esgData = await fetchESGScore(ticker);
+    portfolio.push({
+        ticker,
+        allocation,
+        esgScore: esgData && esgData.esg_risk_rating !== 'N/A' ? esgData.esg_risk_rating : Math.floor(Math.random() * 101),
+        environment: esgData ? esgData.environment_score : 'N/A',
+        social: esgData ? esgData.social_score : 'N/A',
+        governance: esgData ? esgData.governance_score : 'N/A'
+    });
     updatePortfolio();
     document.getElementById('ticker').value = '';
     document.getElementById('allocation').value = '';

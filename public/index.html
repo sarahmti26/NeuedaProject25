@@ -62,3 +62,82 @@
     <script src="../src/app.js"></script>
 </body>
 </html>
+<script>
+    // Assuming you have the alerts data and portfolio data available in your JavaScript
+    const alerts = {
+        AAPL: 'Recent controversy regarding environmental practices.',
+        TSLA: 'Social media scandal.',
+        AMZN: 'Governance issue reported.',
+        // Add more alerts as needed
+    };
+
+    const portfolioData = [
+        { ticker: 'AAPL', allocation: 30, esgScore: 85, environment: 90, social: 80, governance: 85 },
+        { ticker: 'TSLA', allocation: 25, esgScore: 75, environment: 70, social: 90, governance: 60 },
+        { ticker: 'AMZN', allocation: 20, esgScore: 65, environment: 60, social: 70, governance: 75 },
+        // Add more portfolio items as needed
+    ];
+
+    function populatePortfolioTable() {
+        const portfolioBody = document.getElementById('portfolio-body');
+        portfolioBody.innerHTML = ''; // Clear existing rows
+
+        portfolioData.forEach(item => {
+            const row = document.createElement('tr');
+            row.classList.add('hover:bg-gray-100', 'transition', 'duration-200');
+            row.innerHTML = `
+                <td class="px-4 py-2">${item.ticker}</td>
+                <td class="px-4 py-2">${item.allocation}</td>
+                <td class="px-4 py-2">${item.esgScore}</td>
+                <td class="px-4 py-2">E: ${item.environment} S: ${item.social} G: ${item.governance}</td>
+                <td class="px-4 py-2">${alerts[item.ticker] || 'No recent controversies'}</td>
+            `;
+            portfolioBody.appendChild(row);
+        });
+
+        // Update average ESG score
+        const averageEsg = portfolioData.reduce((sum, item) => sum + item.esgScore, 0) / portfolioData.length;
+        document.getElementById('average-esg').innerText = averageEsg.toFixed(2);
+    }
+
+    document.getElementById('stock-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const ticker = document.getElementById('ticker').value.trim().toUpperCase();
+        const allocation = parseFloat(document.getElementById('allocation').value);
+
+        // Add new item to portfolio data
+        portfolioData.push({ ticker, allocation, esgScore: Math.floor(Math.random() * 101), environment: Math.floor(Math.random() * 101), social: Math.floor(Math.random() * 101), governance: Math.floor(Math.random() * 101) });
+        populatePortfolioTable();
+
+        // Clear form fields
+        document.getElementById('ticker').value = '';
+        document.getElementById('allocation').value = '';
+    });
+
+    document.getElementById('upload-btn').addEventListener('click', function () {
+        const fileInput = document.getElementById('csv-upload');
+        const file = fileInput.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const contents = e.target.result;
+                const lines = contents.split('\n').slice(1); // Skip header line
+
+                lines.forEach(line => {
+                    const [ticker, allocation] = line.split(',');
+                    if (ticker && allocation) {
+                        portfolioData.push({ ticker: ticker.trim().toUpperCase(), allocation: parseFloat(allocation), esgScore: Math.floor(Math.random() * 101), environment: Math.floor(Math.random() * 101), social: Math.floor(Math.random() * 101), governance: Math.floor(Math.random() * 101) });
+                    }
+                });
+
+                populatePortfolioTable();
+                fileInput.value = ''; // Clear file input
+            };
+            reader.readAsText(file);
+        }
+    });
+
+    // Initial population of the portfolio table
+    populatePortfolioTable();
+</script>
