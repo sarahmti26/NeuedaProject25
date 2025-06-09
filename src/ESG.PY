@@ -1,8 +1,10 @@
 import yfinance as yf
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import threading
 
 app = Flask(__name__)
+CORS(app)
 
 def get_esg_scores(ticker):
     stock = yf.Ticker(ticker)
