@@ -4,8 +4,15 @@
 const portfolio = [];
 const alerts = {
     "AAPL": "Recent controversy regarding environmental practices.",
-    "TSLA": "Concerns about labor practices raised in recent news",
-    // Add more mocked controversies as needed
+    "TSLA": "Concerns about labor practices raised in recent news.",
+    "XOM": "Facing backlash over lack of climate action commitments.",
+    "MSFT": "Internal memo leaks suggest growing employee unrest.",
+    "JNJ": "Legal scrutiny intensifies over product safety claims.",
+    "AMZN": "Criticism mounts over warehouse working conditions.",
+    "GOOGL": "Antitrust concerns rise amid ongoing federal investigations.",
+    "META": "Data privacy issues surface following third-party breach.",
+    "NVDA": "Allegations of supply chain labor violations emerge.",
+    "JPM": "Governance shakeup as board members resign amid reform push."
 };
 
 async function fetchESGScore(ticker) {
@@ -39,20 +46,32 @@ document.getElementById('stock-form').addEventListener('submit', async function(
     document.getElementById('allocation').value = '';
 });
 
-document.getElementById('upload-btn').addEventListener('click', function() {
+document.getElementById('upload-btn').addEventListener('click', async function() {
     const fileInput = document.getElementById('csv-upload');
     const file = fileInput.files[0];
 
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = async function(event) {
             const csvData = event.target.result.split('\n');
-            csvData.forEach(row => {
-                const [ticker, allocation] = row.split(',');
-                if (ticker && allocation) {
-                    portfolio.push({ ticker: ticker.trim().toUpperCase(), allocation: parseFloat(allocation.trim()), esgScore: Math.floor(Math.random() * 101) });
+            // Skip header if present
+            for (let i = 1; i < csvData.length; i++) {
+                const row = csvData[i].trim();
+                if (!row) continue;
+                const [ticker] = row.split(',');
+                if (ticker) {
+                    const upperTicker = ticker.trim().toUpperCase();
+                    const esgData = await fetchESGScore(upperTicker);
+                    portfolio.push({
+                        ticker: upperTicker,
+                        allocation: 1,
+                        esgScore: esgData && esgData.esg_risk_rating !== 'N/A' ? esgData.esg_risk_rating : Math.floor(Math.random() * 101),
+                        environment: esgData ? esgData.environment_score : 'N/A',
+                        social: esgData ? esgData.social_score : 'N/A',
+                        governance: esgData ? esgData.governance_score : 'N/A'
+                    });
                 }
-            });
+            }
             updatePortfolio();
         };
         reader.readAsText(file);
@@ -70,6 +89,7 @@ function updatePortfolio() {
             <td class="px-4 py-2">${item.ticker}</td>
             <td class="px-4 py-2">${item.allocation}</td>
             <td class="px-4 py-2">${item.esgScore}</td>
+            <td class="px-4 py-2">E: ${item.environment} S: ${item.social} G: ${item.governance}</td>
             <td class="px-4 py-2">${alerts[item.ticker] || 'No recent controversies'}</td>
         `;
         portfolioBody.appendChild(row);
