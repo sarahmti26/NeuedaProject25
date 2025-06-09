@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESG Portfolio Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center text-green-600">ESG Portfolio Tracker</h1>
+        <p class="text-center text-gray-600 mt-2">Manage your investments with ESG insights</p>
+
+        <div class="mt-8">
+            <h2 class="text-xl font-semibold">Enter Stock Tickers and Allocations</h2>
+            <form id="stock-form" class="mt-4">
+                <div class="flex space-x-2">
+                    <input type="text" id="ticker" placeholder="Stock Ticker" class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-500" required />
+                    <input type="number" id="allocation" placeholder="Allocation (%)" class="w-32 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-500" required />
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Add</button>
+                </div>
+            </form>
+            <div class="mt-4">
+                <input type="file" id="csv-upload" accept=".csv" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-green-500" />
+                <button id="upload-btn" class="bg-blue-500 text-white px-4 py-2 rounded">Upload CSV</button>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <h2 class="text-xl font-semibold">Your Portfolio</h2>
+            <table class="min-w-full mt-4 bg-white shadow-lg rounded-lg">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="px-4 py-2">Ticker</th>
+                        <th class="px-4 py-2">Allocation (%)</th>
+                        <th class="px-4 py-2">ESG Score</th>
+                        <th class="px-4 py-2">Controversies</th>
+                    </tr>
+                </thead>
+                <tbody id="portfolio-body">
+                    <!-- Portfolio items will be populated here -->
+                </tbody>
+            </table>
+            <div class="mt-4">
+                <strong>Average ESG Score:</strong> <span id="average-esg">N/A</span>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <h2 class="text-xl font-semibold">Alerts</h2>
+            <ul id="alerts" class="mt-4 list-disc pl-5 text-red-600">
+                <!-- Alerts will be populated here -->
+            </ul>
+        </div>
+
+        <footer class="mt-12 text-center">
+            <p class="text-gray-600">© 2023 ESG Portfolio Tracker. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="../src/app.js"></script>
+</body>
+</html>

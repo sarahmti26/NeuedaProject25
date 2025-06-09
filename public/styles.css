@@ -1,0 +1,94 @@
+/* This file contains the CSS styles for the ESG Portfolio Tracker application. */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7fafc; /* Tailwind's bg-gray-100 */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 2rem; /* Tailwind's text-3xl */
+    font-weight: bold;
+    text-align: center;
+    color: #38a169; /* Tailwind's text-green-600 */
+}
+
+h2 {
+    font-size: 1.25rem; /* Tailwind's text-xl */
+    font-weight: 600; /* Tailwind's font-semibold */
+}
+
+p {
+    text-align: center;
+    color: #4a5568; /* Tailwind's text-gray-600 */
+    margin-top: 0.5rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db; /* Tailwind's border-gray-300 */
+    border-radius: 0.5rem; /* Tailwind's rounded-lg */
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="file"]:focus {
+    border-color: #48bb78; /* Tailwind's focus:ring-green-500 */
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem; /* Tailwind's rounded */
+    color: white;
+    cursor: pointer;
+}
+
+button.bg-green-500 {
+    background-color: #48bb78; /* Tailwind's bg-green-500 */
+}
+
+button.bg-blue-500 {
+    background-color: #4299e1; /* Tailwind's bg-blue-500 */
+}
+
+table {
+    width: 100%;
+    margin-top: 1rem;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem; /* Tailwind's rounded-lg */
+}
+
+th, td {
+    padding: 0.5rem;
+    text-align: left;
+}
+
+th {
+    background-color: #edf2f7; /* Tailwind's bg-gray-200 */
+}
+
+strong {
+    font-weight: bold;
+}
+
+ul {
+    margin-top: 1rem;
+    padding-left: 1.25rem; /* Tailwind's pl-5 */
+    color: #e53e3e; /* Tailwind's text-red-600 */
+}
+
+footer {
+    margin-top: 3rem;
+    text-align: center;
+    color: #4a5568; /* Tailwind's text-gray-600 */
+}
