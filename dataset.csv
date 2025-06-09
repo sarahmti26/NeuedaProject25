@@ -1,0 +1,11 @@
+ticker,company,sector,environmental,social,governance,total_score
+AAPL,Apple,Technology,65,75,80,73
+TSLA,Tesla,Consumer Discretionary,40,35,55,43
+XOM,ExxonMobil,Energy,15,20,30,22
+MSFT,Microsoft,Technology,80,85,88,84
+JNJ,Johnson & Johnson,Healthcare,75,70,82,76
+AMZN,Amazon,Consumer Discretionary,45,55,60,53
+GOOGL,Alphabet,Communication Services,78,80,85,81
+META,Meta Platforms,Communication Services,35,40,45,40
+NVDA,NVIDIA,Technology,70,68,75,71
+JPM,JP Morgan Chase,Financials,50,60,65,58
